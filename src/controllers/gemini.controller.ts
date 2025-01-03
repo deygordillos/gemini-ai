@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import config from "../config/config";
-import { DatabaseSync } from "node:sqlite";
 
 export const getOCRDataImageByBase64 = async (req: Request, res: Response): Promise<Response> => {
     try {
