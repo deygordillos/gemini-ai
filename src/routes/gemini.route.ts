@@ -3,6 +3,6 @@ import { getOCRDataImageByBase64 } from '../controllers/gemini.controller';
 
 const router = Router();
 
-router.get('/ocr', getOCRDataImageByBase64);
+router.post('/ocr', getOCRDataImageByBase64);
 
 export default router

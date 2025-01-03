@@ -2,7 +2,6 @@ import express from 'express';
 import logger from 'morgan';
 import indexRoutes from './routes/index.route';
 import config from './config/config';
-import 'dotenv/config';
 
 const app = express();
 app.use(logger('dev'));
