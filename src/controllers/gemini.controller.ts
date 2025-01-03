@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import config from "../config/config";
+import { DatabaseSync } from "node:sqlite";
 
 export const getOCRDataImageByBase64 = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -14,13 +15,13 @@ export const getOCRDataImageByBase64 = async (req: Request, res: Response): Prom
             items: {
                 type: SchemaType.OBJECT,
                 properties: {
-                    dbm: {
+                    data: {
                         type: SchemaType.STRING,
                         description: "dbm",
                         nullable: false,
                     },
                 },
-                required: ["dbm"],
+                required: ["data"],
             },
         };
 
@@ -48,7 +49,7 @@ export const getOCRDataImageByBase64 = async (req: Request, res: Response): Prom
 
         const response = {
             code: 200,
-            data: data[0]
+            response: data[0]
         };
         console.log('getOCRDataImageByBase64 response: ', JSON.stringify(response));
         return res.status(200).send(response);
