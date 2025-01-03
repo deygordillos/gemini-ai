@@ -4,7 +4,7 @@ import config from "../config/config";
 
 export const getOCRDataImageByBase64 = async (req: Request, res: Response): Promise<Response> => {
     try {
-        let { geminiPromt, base64Image } = req.body
+        let { geminiPrompt, base64Image } = req.body
         console.log('getOCRDataImageByBase64 request: ', JSON.stringify(req.body))
         const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
@@ -39,7 +39,7 @@ export const getOCRDataImageByBase64 = async (req: Request, res: Response): Prom
                     mimeType: config.geminiMimeType,
                 },
             },
-            geminiPromt,
+            geminiPrompt,
         ]);
 
         const data = JSON.parse(result.response.text());
