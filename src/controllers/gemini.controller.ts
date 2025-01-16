@@ -5,7 +5,13 @@ import config from "../config/config";
 export const getOCRDataImageByBase64 = async (req: Request, res: Response): Promise<Response> => {
     try {
         let { geminiPrompt, base64Image } = req.body
-        console.log('getOCRDataImageByBase64 request: ', JSON.stringify(req.body))
+
+        if (!geminiPrompt || !base64Image) {
+            console.error("No se envió geminiPrompt o la imagen");
+            return res.status(400).send({ code: 400, message: "Debe enviar el prompt y la imagen en base64" });
+        }
+
+        console.log('getOCRDataImageByBase64 geminiPrompt: ', geminiPrompt)
         const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
         const schema = {
@@ -41,6 +47,11 @@ export const getOCRDataImageByBase64 = async (req: Request, res: Response): Prom
             },
             geminiPrompt,
         ]);
+
+        if (!result || !result.response || typeof result.response.text !== "function") {
+            console.error("La respuesta del modelo es inválida:", result);
+            return res.status(500).send({ code: 500, message: "Respuesta inválida del modelo", data: result });
+        }
 
         const data = JSON.parse(result.response.text());
         
